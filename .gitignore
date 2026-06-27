@@ -1,0 +1,14 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Assets placeholders (substituir pelos arquivos reais)
+bbg-site/assets/logo.png
+bbg-site/assets/favicon.png
+bbg-site/assets/hero/.gitkeep
+bbg-site/assets/produtos/.gitkeep
+bbg-site/assets/empresa/.gitkeep
+bbg-site/assets/segmentos/.gitkeep
+bbg-site/assets/banners/.gitkeep
+bbg-site/assets/icons/.gitkeep

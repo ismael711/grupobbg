@@ -1,0 +1,358 @@
+/* ============================================================
+   BBG Confecções — responsive.css
+   Breakpoints: lg (1024), md (768), sm (480)
+   ============================================================ */
+
+/* ── Large screens (up to 1280) ─────────────────────────────── */
+@media (max-width: 1280px) {
+  :root {
+    --container-pad: 2rem;
+  }
+
+  .footer__grid {
+    grid-template-columns: 1.5fr 1fr 1fr 1.5fr;
+  }
+}
+
+/* ── Desktop / Notebook (max 1024) ──────────────────────────── */
+@media (max-width: 1024px) {
+  :root {
+    --spacing-4xl: 5rem;
+    --spacing-3xl: 3.5rem;
+  }
+
+  .hero__inner {
+    grid-template-columns: 1fr;
+    text-align: center;
+    gap: var(--spacing-2xl);
+  }
+
+  .hero__content {
+    max-width: 640px;
+    margin-inline: auto;
+  }
+
+  .hero__subtitle {
+    max-width: 100%;
+  }
+
+  .hero__actions {
+    justify-content: center;
+  }
+
+  .hero__media {
+    order: -1;
+  }
+
+  .hero__image-wrap {
+    max-width: 480px;
+    margin-inline: auto;
+  }
+
+  .numbers__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .diff-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .segment-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .perso-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .process-steps {
+    grid-template-columns: repeat(3, 1fr);
+    row-gap: var(--spacing-xl);
+  }
+
+  .process-track::before,
+  .process-track__progress {
+    display: none;
+  }
+
+  /* Footer: 2 colunas em notebook — brand + contato na linha de cima, links abaixo */
+  .footer__grid {
+    grid-template-columns: 1.5fr 1fr 1fr;
+    grid-template-rows: auto auto;
+    gap: var(--spacing-xl);
+  }
+
+  /* Brand ocupa as duas últimas colunas na primeira linha */
+  .footer__brand {
+    grid-column: 1 / -1;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: var(--spacing-2xl);
+    padding-bottom: var(--spacing-xl);
+    border-bottom: 1px solid rgba(255,255,255,.08);
+  }
+
+  .footer__brand > .footer__logo {
+    flex-shrink: 0;
+  }
+
+  .footer__brand > div,
+  .footer__brand > p,
+  .footer__brand > .footer__about {
+    flex: 1;
+  }
+
+  .contact-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Nav hidden at this size on smaller tablets */
+}
+
+/* ── Tablet (max 768) ───────────────────────────────────────── */
+@media (max-width: 768px) {
+  :root {
+    --container-pad: 1.25rem;
+    --spacing-4xl: 4rem;
+    --spacing-3xl: 3rem;
+  }
+
+  /* Header mobile */
+  .header__nav {
+    position: fixed;
+    top: var(--header-h);
+    left: 0;
+    right: 0;
+    background: var(--color-white);
+    border-top: 1px solid var(--color-border-light);
+    border-bottom: 1px solid var(--color-border-light);
+    padding: var(--spacing-md) var(--container-pad);
+    box-shadow: var(--shadow-lg);
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+    transform: translateY(-110%);
+    opacity: 0;
+    transition: transform var(--transition-base), opacity var(--transition-base);
+    pointer-events: none;
+    z-index: calc(var(--z-header) - 1);
+  }
+
+  .header.scrolled .header__nav {
+    top: var(--header-h-sm);
+  }
+
+  .header__nav.open {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+    animation: navSlideDown 0.3s ease;
+  }
+
+  .nav__list {
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    gap: 0;
+  }
+
+  .nav__link {
+    padding: 0.75rem 0;
+    font-size: 0.9375rem;
+    width: 100%;
+    border-bottom: 1px solid var(--color-border-light);
+  }
+
+  .nav__link::after {
+    display: none;
+  }
+
+  .header__logo img {
+    height: 54px;   /* ligeiramente menor em tablet/mobile */
+  }
+
+  .header.scrolled .header__logo img {
+    height: 42px;
+  }
+
+  .header__actions .btn--whatsapp .btn-text {
+    display: none;
+  }
+
+  .nav-toggle {
+    display: flex;
+  }
+
+  /* Hero */
+  .hero__badge--since,
+  .hero__badge--quality {
+    display: none;
+  }
+
+  /* Numbers */
+  .numbers__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* Lines */
+  .lines-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* Diff */
+  .diff-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Segment */
+  .segment-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* Process */
+  .process-steps {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* Footer — empilha tudo em 1 coluna no tablet */
+  .footer__grid {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+  }
+
+  .footer__brand {
+    /* volta para coluna única, sem flex-row do breakpoint anterior */
+    flex-direction: column;
+    align-items: flex-start;
+    grid-column: auto;
+    padding-bottom: var(--spacing-xl);
+    border-bottom: 1px solid rgba(255,255,255,.08);
+    gap: 0;
+  }
+
+  .footer__brand > div,
+  .footer__brand > p,
+  .footer__brand > .footer__about {
+    flex: unset;
+  }
+
+  .footer__logo {
+    height: 48px;
+  }
+
+  .footer__bottom {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  /* Form */
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .form-group--full {
+    grid-column: 1;
+  }
+
+  /* Perso */
+  .perso-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* CTA buttons */
+  .cta-section .btn-group {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+/* ── Mobile (max 480) ───────────────────────────────────────── */
+@media (max-width: 480px) {
+  :root {
+    --container-pad: 1rem;
+    --spacing-4xl: 3rem;
+  }
+
+  /* Numbers single column */
+  .numbers__grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Lines */
+  .lines-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Segment */
+  .segment-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Process */
+  .process-steps {
+    grid-template-columns: 1fr;
+  }
+
+  /* Hero actions */
+  .hero__actions {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .hero__actions .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* Cards grid */
+  .cards-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* CTA */
+  .cta-section .btn-group .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* Catalog controls */
+  .catalog-controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .search-wrap {
+    min-width: unset;
+  }
+
+  /* WhatsApp float */
+  .whatsapp-float {
+    bottom: 1.25rem;
+    right: 1.25rem;
+  }
+
+  .back-top {
+    bottom: 4.5rem;
+    right: 1.25rem;
+  }
+}
+
+/* ── Print ──────────────────────────────────────────────────── */
+@media print {
+  .header,
+  .whatsapp-float,
+  .back-top,
+  .cta-section,
+  .footer {
+    display: none;
+  }
+
+  body {
+    padding-top: 0;
+  }
+
+  .page-banner {
+    padding-top: 0;
+    min-height: unset;
+  }
+}

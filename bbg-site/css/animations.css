@@ -1,0 +1,275 @@
+/* ============================================================
+   BBG Confecções — animations.css
+   All keyframes, transitions, reveal effects, parallax helpers
+   ============================================================ */
+
+/* ── Reveal on scroll ───────────────────────────────────────── */
+[data-reveal] {
+  opacity: 0;
+  transition: opacity 0.65s ease, transform 0.65s ease;
+  will-change: opacity, transform;
+}
+
+[data-reveal="fade"] {
+  transform: translateY(24px);
+}
+
+[data-reveal="fade-up"] {
+  transform: translateY(40px);
+}
+
+[data-reveal="fade-left"] {
+  transform: translateX(-40px);
+}
+
+[data-reveal="fade-right"] {
+  transform: translateX(40px);
+}
+
+[data-reveal="scale"] {
+  transform: scale(0.92);
+}
+
+[data-reveal="zoom"] {
+  transform: scale(0.85);
+}
+
+/* Stagger siblings */
+[data-reveal-group] > * {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.55s ease, transform 0.55s ease;
+  will-change: opacity, transform;
+}
+
+/* Revealed state — JS adds .revealed */
+[data-reveal].revealed {
+  opacity: 1;
+  transform: none;
+}
+
+[data-reveal-group].revealed > * {
+  opacity: 1;
+  transform: none;
+}
+
+/* Stagger delays for group children */
+[data-reveal-group].revealed > *:nth-child(1)  { transition-delay: 0ms;   }
+[data-reveal-group].revealed > *:nth-child(2)  { transition-delay: 80ms;  }
+[data-reveal-group].revealed > *:nth-child(3)  { transition-delay: 160ms; }
+[data-reveal-group].revealed > *:nth-child(4)  { transition-delay: 240ms; }
+[data-reveal-group].revealed > *:nth-child(5)  { transition-delay: 320ms; }
+[data-reveal-group].revealed > *:nth-child(6)  { transition-delay: 400ms; }
+[data-reveal-group].revealed > *:nth-child(7)  { transition-delay: 480ms; }
+[data-reveal-group].revealed > *:nth-child(8)  { transition-delay: 560ms; }
+[data-reveal-group].revealed > *:nth-child(9)  { transition-delay: 640ms; }
+[data-reveal-group].revealed > *:nth-child(10) { transition-delay: 720ms; }
+
+/* ── Hero entrance ──────────────────────────────────────────── */
+.hero-enter {
+  animation: heroEnter 0.9s cubic-bezier(.22,.68,0,1.2) both;
+}
+
+.hero-enter--delay-1 { animation-delay: 0.15s; }
+.hero-enter--delay-2 { animation-delay: 0.30s; }
+.hero-enter--delay-3 { animation-delay: 0.45s; }
+.hero-enter--delay-4 { animation-delay: 0.60s; }
+.hero-enter--delay-5 { animation-delay: 0.75s; }
+
+@keyframes heroEnter {
+  from {
+    opacity: 0;
+    transform: translateY(32px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-enter-right {
+  animation: heroEnterRight 1.0s cubic-bezier(.22,.68,0,1.1) 0.4s both;
+}
+
+@keyframes heroEnterRight {
+  from {
+    opacity: 0;
+    transform: translateX(48px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+/* ── Floating / pulse animations ────────────────────────────── */
+@keyframes floatY {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-12px); }
+}
+
+@keyframes floatX {
+  0%, 100% { transform: translateX(0); }
+  50%       { transform: translateX(8px); }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.6; }
+}
+
+@keyframes pulseDot {
+  0%   { box-shadow: 0 0 0 0 rgba(13,99,255,.5); }
+  70%  { box-shadow: 0 0 0 10px rgba(13,99,255,0); }
+  100% { box-shadow: 0 0 0 0 rgba(13,99,255,0); }
+}
+
+.float {
+  animation: floatY 4s ease-in-out infinite;
+}
+
+.pulse-dot {
+  animation: pulseDot 2s infinite;
+}
+
+/* ── Ripple button ──────────────────────────────────────────── */
+@keyframes rippleSpread {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+.ripple-effect {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255,255,255,.35);
+  width: 60px;
+  height: 60px;
+  margin-top: -30px;
+  margin-left: -30px;
+  pointer-events: none;
+  animation: rippleSpread 0.6s linear;
+}
+
+/* ── Count-up ───────────────────────────────────────────────── */
+.counter-value {
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+
+/* ── Process line ───────────────────────────────────────────── */
+@keyframes lineGrow {
+  from { width: 0; }
+  to   { width: 100%; }
+}
+
+.process-track.animated .process-track__progress {
+  animation: lineGrow 1.4s cubic-bezier(.4,0,.2,1) forwards;
+}
+
+/* ── Hover card glow ────────────────────────────────────────── */
+@keyframes glowIn {
+  from { box-shadow: 0 0 0 0 rgba(13,99,255,.0); }
+  to   { box-shadow: 0 0 0 4px rgba(13,99,255,.10); }
+}
+
+/* ── Skeleton loading ───────────────────────────────────────── */
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--color-bg) 25%,
+    var(--color-border-light) 50%,
+    var(--color-bg) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: var(--radius-sm);
+}
+
+/* ── Fade in ────────────────────────────────────────────────── */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ── Slide up ───────────────────────────────────────────────── */
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── Scale in ───────────────────────────────────────────────── */
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.90);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* ── Nav mobile slide ───────────────────────────────────────── */
+@keyframes navSlideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── Spin ───────────────────────────────────────────────────── */
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+.spin {
+  animation: spin 1s linear infinite;
+}
+
+/* ── Badge pop ──────────────────────────────────────────────── */
+@keyframes badgePop {
+  0%   { transform: scale(0.8); opacity: 0; }
+  70%  { transform: scale(1.08); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.badge-pop {
+  animation: badgePop 0.5s cubic-bezier(.34,1.56,.64,1) forwards;
+}
+
+/* ── Parallax layers ────────────────────────────────────────── */
+.parallax-wrap {
+  overflow: hidden;
+  position: relative;
+}
+
+.parallax-layer {
+  will-change: transform;
+}
+
+/* ── Reduce motion override ─────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
