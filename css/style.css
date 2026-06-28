@@ -1085,7 +1085,6 @@ p  { color: var(--color-muted); line-height: 1.75; }
   object-fit: contain;
   object-position: left center;
   margin-bottom: var(--spacing-lg);
-  filter: brightness(0) invert(1);
 }
 
 /* Fallback texto */
@@ -1122,15 +1121,21 @@ p  { color: var(--color-muted); line-height: 1.75; }
   align-items: center;
   justify-content: center;
   transition: all var(--transition-base);
-  color: rgba(255,255,255,.6);
+  color: white;
 }
 
+.footer__social a[aria-label="Instagram"] { color: #E1306C; border-color: #E1306C; background: rgba(225,48,108,.12); }
+.footer__social a[aria-label="Facebook"]  { color: #1877F2; border-color: #1877F2; background: rgba(24,119,242,.12); }
+.footer__social a[aria-label="LinkedIn"]  { color: #0A66C2; border-color: #0A66C2; background: rgba(10,102,194,.12); }
+
 .footer__social a:hover {
-  background: var(--color-primary);
-  border-color: var(--color-primary);
   color: white;
   transform: translateY(-3px);
 }
+
+.footer__social a[aria-label="Instagram"]:hover { background: #E1306C; border-color: #E1306C; }
+.footer__social a[aria-label="Facebook"]:hover  { background: #1877F2; border-color: #1877F2; }
+.footer__social a[aria-label="LinkedIn"]:hover  { background: #0A66C2; border-color: #0A66C2; }
 
 .footer__social svg {
   width: 17px;
