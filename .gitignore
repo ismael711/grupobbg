@@ -4,11 +4,11 @@
 .LSOverride
 
 # Assets placeholders (substituir pelos arquivos reais)
-bbg-site/assets/logo.png
-bbg-site/assets/favicon.png
-bbg-site/assets/hero/.gitkeep
-bbg-site/assets/produtos/.gitkeep
-bbg-site/assets/empresa/.gitkeep
-bbg-site/assets/segmentos/.gitkeep
-bbg-site/assets/banners/.gitkeep
-bbg-site/assets/icons/.gitkeep
+assets/logo.png
+assets/favicon.png
+assets/hero/.gitkeep
+assets/produtos/.gitkeep
+assets/empresa/.gitkeep
+assets/segmentos/.gitkeep
+assets/banners/.gitkeep
+assets/icons/.gitkeep
