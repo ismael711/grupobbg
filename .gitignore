@@ -2,13 +2,3 @@
 .DS_Store
 .AppleDouble
 .LSOverride
-
-# Assets placeholders (substituir pelos arquivos reais)
-assets/logo.png
-assets/favicon.png
-assets/hero/.gitkeep
-assets/produtos/.gitkeep
-assets/empresa/.gitkeep
-assets/segmentos/.gitkeep
-assets/banners/.gitkeep
-assets/icons/.gitkeep
