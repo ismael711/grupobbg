@@ -141,6 +141,12 @@
                 <span class="form-error" id="c-mensagem-error" role="alert">Informe sua mensagem.</span>
               </div>
             </div>
+            <!-- Honeypot anti-spam (oculto para humanos, bots preenchem) -->
+            <div style="display:none;" aria-hidden="true">
+              <label for="website">Deixe em branco</label>
+              <input type="text" id="website" name="website" tabindex="-1" autocomplete="off"/>
+            </div>
+            <div id="form-feedback" role="alert" aria-live="polite" style="display:none;margin-top:1rem;padding:.875rem 1rem;border-radius:.5rem;font-size:.9rem;font-weight:500;"></div>
             <div style="margin-top:1.5rem;">
               <button type="submit" class="btn btn--primary btn--lg" id="c-submit-btn">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
@@ -163,19 +169,27 @@
   <script src="js/animations.js"></script>
 
   <script>
-  /* ── Contact form validation ─────────────────────────────── */
+  /* ── Contact form validation + fetch submit ──────────────── */
   (function() {
     'use strict';
-    const form    = document.getElementById('contact-form');
-    const success = document.getElementById('contact-success');
+    const form     = document.getElementById('contact-form');
+    const success  = document.getElementById('contact-success');
+    const feedback = document.getElementById('form-feedback');
 
     function validate(id, errId, testFn) {
-      const el  = document.getElementById(id);
-      const err = document.getElementById(errId);
-      if (!el || !err) return true;
+      const el = document.getElementById(id);
+      if (!el) return true;
       const valid = testFn(el.value.trim());
       el.closest('.form-group').classList.toggle('has-error', !valid);
       return valid;
+    }
+
+    function showFeedback(msg, isError) {
+      feedback.textContent = msg;
+      feedback.style.display = 'block';
+      feedback.style.background    = isError ? '#fff0f0' : '#f0fff4';
+      feedback.style.color         = isError ? '#c0392b' : '#1a7f3c';
+      feedback.style.border        = isError ? '1px solid #f5c6c6' : '1px solid #a3d9b1';
     }
 
     function maskPhone(val) {
@@ -187,6 +201,8 @@
 
     form.addEventListener('submit', function(e) {
       e.preventDefault();
+      feedback.style.display = 'none';
+
       let ok = true;
       ok = validate('c-nome',    'c-nome-error',    v => v.length >= 2) && ok;
       ok = validate('c-email',   'c-email-error',   v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) && ok;
@@ -200,12 +216,31 @@
 
       const btn = document.getElementById('c-submit-btn');
       btn.disabled = true;
-      btn.textContent = 'Enviando…';
-      setTimeout(() => {
-        form.style.display = 'none';
-        success.style.display = 'block';
-        success.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      }, 800);
+      btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> Enviando…';
+
+      const data = new FormData(form);
+
+      fetch('/enviar.php', {
+        method: 'POST',
+        body: data
+      })
+      .then(function(res) { return res.json(); })
+      .then(function(json) {
+        if (json.status === 'success') {
+          form.style.display = 'none';
+          success.style.display = 'block';
+          success.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        } else {
+          showFeedback(json.message || 'Ocorreu um erro. Tente novamente.', true);
+          btn.disabled = false;
+          btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> Enviar mensagem';
+        }
+      })
+      .catch(function() {
+        showFeedback('Não foi possível conectar ao servidor. Verifique sua conexão e tente novamente.', true);
+        btn.disabled = false;
+        btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> Enviar mensagem';
+      });
     });
   })();
   </script>
