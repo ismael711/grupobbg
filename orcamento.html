@@ -207,6 +207,7 @@
 
             </div>
 
+            <div id="form-feedback" role="alert" aria-live="polite" style="display:none;margin-bottom:1rem;padding:.875rem 1rem;border-radius:.5rem;font-size:.9rem;font-weight:500;"></div>
             <div style="margin-top:2rem;display:flex;align-items:center;gap:1rem;flex-wrap:wrap;">
               <button type="submit" class="btn btn--primary btn--lg" id="submit-btn">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
@@ -297,16 +298,47 @@
         return;
       }
 
-      // Simulate form submission (replace with real endpoint)
       const btn = document.getElementById('submit-btn');
       btn.disabled = true;
-      btn.textContent = 'Enviando…';
+      btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> Enviando…';
 
-      setTimeout(() => {
-        form.style.display = 'none';
-        success.style.display = 'block';
-        success.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      }, 800);
+      const data = new FormData(form);
+
+      fetch('enviar.php', {
+        method: 'POST',
+        body: data
+      })
+      .then(function(res) { return res.json(); })
+      .then(function(json) {
+        if (json.status === 'success') {
+          form.style.display = 'none';
+          success.style.display = 'block';
+          success.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        } else {
+          var fb = document.getElementById('form-feedback');
+          if (fb) {
+            fb.textContent = json.message || 'Ocorreu um erro. Tente novamente.';
+            fb.style.display = 'block';
+            fb.style.background = '#fef2f2';
+            fb.style.color = '#dc2626';
+            fb.style.border = '1px solid #fecaca';
+          }
+          btn.disabled = false;
+          btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> Enviar solicitação';
+        }
+      })
+      .catch(function() {
+        var fb = document.getElementById('form-feedback');
+        if (fb) {
+          fb.textContent = 'Não foi possível conectar ao servidor. Verifique sua conexão e tente novamente.';
+          fb.style.display = 'block';
+          fb.style.background = '#fef2f2';
+          fb.style.color = '#dc2626';
+          fb.style.border = '1px solid #fecaca';
+        }
+        btn.disabled = false;
+        btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> Enviar solicitação';
+      });
     });
 
     // Live validation on blur
