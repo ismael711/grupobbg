@@ -1,0 +1,26 @@
+name: Deploy para HostGator
+on:
+  push:
+    branches:
+      - main # Troque para 'master' se a sua branch principal se chamar master
+
+jobs:
+  web-deploy:
+    name: Subir arquivos via FTP
+    runs-on: ubuntu-latest
+    steps:
+      - name: Baixar código do repositório
+        uses: actions/checkout@v4
+
+      - name: Enviar para o cPanel HostGator
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/node_modules/**
+            config-email.php
