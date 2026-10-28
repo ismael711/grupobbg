@@ -83,14 +83,16 @@ try {
 
     // Configuração do servidor SMTP
     $mail->isSMTP();
-    $mail->Host       = 'smtp.hostgator.com.br';
-    $mail->SMTPAuth   = true;
-    $mail->Username   = 'comercial@grupobbg.com.br';
-    $mail->Password   = $senha;
-    $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
-    $mail->Port       = 465;
-    $mail->CharSet    = 'UTF-8';
-
+    $mail->Host        = 'localhost';
+    $mail->SMTPAuth    = true;
+    $mail->Username    = 'comercial@grupobbg.com.br';
+    $mail->Password    = $senha;
+    $mail->SMTPSecure  = false;
+    $mail->SMTPAutoTLS = false;
+    $mail->Port        = 587;
+    $mail->Timeout     = 15;
+    $mail->CharSet     = 'UTF-8';
+    
     // Remetente e destinatário
     $mail->setFrom('comercial@grupobbg.com.br', 'Site Grupo BBG');
     $mail->addAddress('comercial@grupobbg.com.br', 'Site Grupo BBG');
