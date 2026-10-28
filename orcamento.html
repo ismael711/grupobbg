@@ -191,20 +191,6 @@
                 <textarea id="mensagem" name="mensagem" class="form-textarea" placeholder="Descreva o seu projeto: modelo desejado, cores, tecidos, personalização necessária e qualquer detalhe importante..." rows="5"></textarea>
               </div>
 
-              <!-- File upload -->
-              <div class="form-group form-group--full">
-                <label class="form-label" for="logomarca">Logomarca (opcional)</label>
-                <label class="form-file-wrap" for="logomarca" aria-describedby="file-desc">
-                  <input type="file" id="logomarca" name="anexo" accept=".jpg,.jpeg,.png,.gif,.pdf" aria-label="Enviar arquivo de logomarca"/>
-                  <div class="form-file-wrap__icon" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-                  </div>
-                  <p id="file-desc"><span>Clique para enviar</span> ou arraste aqui</p>
-                  <p style="font-size:.75rem;margin-top:.25rem;">PNG, JPG, PDF, AI ou SVG (máx. 10MB)</p>
-                </label>
-                <span id="file-name" style="font-size:.8125rem;color:var(--color-primary);display:none;"></span>
-              </div>
-
             </div>
 
             <div id="form-feedback" role="alert" aria-live="polite" style="display:none;margin-bottom:1rem;padding:.875rem 1rem;border-radius:.5rem;font-size:.9rem;font-weight:500;"></div>
@@ -237,19 +223,6 @@
 
     const form     = document.getElementById('orcamento-form');
     const success  = document.getElementById('form-success');
-    const fileInput= document.getElementById('logomarca');
-    const fileName = document.getElementById('file-name');
-
-    // Show selected filename
-    if (fileInput) {
-      fileInput.addEventListener('change', () => {
-        if (fileInput.files.length) {
-          fileName.textContent = '✓ ' + fileInput.files[0].name;
-          fileName.style.display = 'block';
-        }
-      });
-    }
-
     // Phone mask helper
     function maskPhone(val) {
       return val.replace(/\D/g, '')

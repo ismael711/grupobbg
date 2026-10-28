@@ -131,28 +131,6 @@ try {
         $mail->AltBody = "Empresa: {$empresa}\nResponsável: {$nome}\nE-mail: {$email}\nTelefone: {$telefone}\nWhatsApp: {$whatsapp}\nTipo: {$tipo_uni}\nQuantidade: {$quantidade}\nCidade: {$cidade}/{$estado}\n\nDescrição:\n{$mensagem}";
     }
 
-    // Processar anexo (se enviado)
-    if (isset($_FILES['anexo']) && $_FILES['anexo']['error'] !== UPLOAD_ERR_NO_FILE) {
-        if ($_FILES['anexo']['error'] !== UPLOAD_ERR_OK) {
-            json_out('error', 'Erro ao receber o arquivo anexado.');
-        }
-
-        $allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'application/pdf'];
-        $maxSize      = 5 * 1024 * 1024; // 5 MB
-
-        if ($_FILES['anexo']['size'] > $maxSize) {
-            json_out('error', 'O arquivo não pode ultrapassar 5 MB.');
-        }
-
-        $finfo    = new finfo(FILEINFO_MIME_TYPE);
-        $mimeReal = $finfo->file($_FILES['anexo']['tmp_name']);
-        if (!in_array($mimeReal, $allowedTypes, true)) {
-            json_out('error', 'Tipo de arquivo não permitido. Use JPG, PNG, GIF ou PDF.');
-        }
-
-        $mail->addAttachment($_FILES['anexo']['tmp_name'], $_FILES['anexo']['name']);
-    }
-
     $mail->send();
     json_out('success', 'Mensagem enviada com sucesso! Entraremos em contato em breve.');
 
